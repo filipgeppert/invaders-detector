@@ -5,6 +5,9 @@
 
 `--precision` is a float 0 to 1 value that specifies how precise pattern matching should be. Defaults to 0.75.
 
+## How to check different samples
+Replace `radar_sample` in `main.py` and run it.
+
 ## How to test
 `pytest` from top level directory and activated environment
 
