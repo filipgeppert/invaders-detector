@@ -41,7 +41,16 @@ def calculate_jaccard_similarity(x: np.ndarray, y: np.ndarray) -> float:
     return similarity.sum() / x.size
 
 
-def convolve_array(kernel: np.ndarray, array: np.ndarray, aggregator: Callable = calculate_jaccard_similarity):
+def convolve_array(kernel: np.ndarray, array: np.ndarray,
+                   aggregator: Callable = calculate_jaccard_similarity) -> np.ndarray:
+    """
+    Applies convolution on a given array.
+
+    :param kernel: shape kernel
+    :param array: array to be convolved with
+    :param aggregator: aggregation function that kernel uses
+    :return: convolved array
+    """
     kernel_shape_y, kernel_shape_x = kernel.shape
     array_shape_y, array_shape_x = array.shape
     array_results = np.zeros((array_shape_y - kernel_shape_y + 1, array_shape_x - kernel_shape_x + 1))
