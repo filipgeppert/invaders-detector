@@ -1,10 +1,30 @@
 from source.entities import Invader, Radar, RadarSample
 from source.utilities import Serializer
+from typing import List
 
 import argparse
 
+
+def main(invaders_contours: List[str], radar_sample_str: str, precision: float):
+    """
+    Detects invaders for a given radar sample.
+    Prints results and invader coordinates.
+    """
+    # Run analysis
+    invaders = [Invader(Serializer.sample_to_array(i)) for i in invaders_contours]
+    radar_sample = RadarSample(Serializer.sample_to_array(radar_sample_str))
+    radar_readings = [Radar(invader=invader, radar_sample=radar_sample, precision=precision)
+                      for invader in invaders]
+
+    # Locate invaders and print results
+    for radar_reading in radar_readings:
+        radar_reading.locate_invader()
+        print(f"Coordinates: {radar_reading.get_invader_coordinates()}")
+        print(Serializer.array_to_sample(radar_reading.results))
+
+
 if __name__ == '__main__':
-    invaders_contours = [
+    known_invaders_contours = [
         """--o-----o--
             ---o---o---
             --ooooooo--
@@ -22,7 +42,7 @@ if __name__ == '__main__':
             -o-oo-o-
             o-o--o-o"""
     ]
-    radar_sample = """----o--oo----o--ooo--ooo--o------o---oo-o----oo---o--o---------o----o------o-------------o--o--o--o-
+    known_radar_sample = """----o--oo----o--ooo--ooo--o------o---oo-o----oo---o--o---------o----o------o-------------o--o--o--o-
                         --o-o-----oooooooo-oooooo---o---o----o------ooo-o---o--o----o------o--o---ooo-----o--oo-o------o----
                         --o--------oo-ooo-oo-oo-oo-----O------------ooooo-----oo----o------o---o--o--o-o-o------o----o-o-o--
                         -------o--oooooo--o-oo-o--o-o-----oo--o-o-oo--o-oo-oo-o--------o-----o------o-ooooo---o--o--o-------
@@ -78,14 +98,4 @@ if __name__ == '__main__':
                         type=float, default=0.75)
     args = parser.parse_args()
 
-    # Run analysis
-    invaders = [Invader(Serializer.sample_to_array(i)) for i in invaders_contours]
-    radar_sample = RadarSample(Serializer.sample_to_array(radar_sample))
-    radar_readings = [Radar(invader=invader, radar_sample=radar_sample, precision=args.precision)
-                      for invader in invaders]
-
-    # Locate invaders and print results
-    for radar_reading in radar_readings:
-        radar_reading.locate_invader()
-        print(f"Coordinates: {radar_reading.get_invader_coordinates()}")
-        print(Serializer.array_to_sample(radar_reading.results))
+    main(invaders_contours=known_invaders_contours, radar_sample_str=known_radar_sample, precision=args.precision)
