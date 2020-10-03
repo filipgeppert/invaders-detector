@@ -12,8 +12,8 @@ Replace `radar_sample` in `main.py` and run it.
 `pytest` from top level directory and activated environment
 
 ## How to check test coverage
-`coverage run main.py`
-`coverage report -m main.py source/entities.py source/utilities.py`
+1. `coverage run main.py`
+2. `coverage report -m main.py source/entities.py source/utilities.py`
 
 # Solution description
 Script detects aliens specified in `main.py` for a given radar sample.
