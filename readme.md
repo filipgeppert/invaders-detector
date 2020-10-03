@@ -1,7 +1,15 @@
 # How to run assignment
-1. `pipenv install`
-2. `pipenv shell`
-3. `python main.py`
+1. `pipenv install` to install requirements
+2. `pipenv shell` to activate environment
+3. `python main.py` or `python main.py --precision 0.8` to run assignment
+`--precision` is a float 0 to 1 value that specify how precise pattern matching should be. Defaults to 0.75.
+
+## How to test
+`pytest` from top level directory and activated environment
+
+## How to check test coverage
+`coverage run main.py`
+`coverage report -m main.py source/entities.py source/utilities.py`
 
 # Development assignment
 
